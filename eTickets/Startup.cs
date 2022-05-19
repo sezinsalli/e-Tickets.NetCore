@@ -28,10 +28,14 @@ namespace eTickets
             //DbContext Confýguratoýn
             services.AddDbContext<AppDbContext>();
 
-            //service confýguration
-            services.AddScoped<IActorsService,ActorsService>(); 
 
-            
+            //service confýguration
+            services.AddScoped<IActorsService,ActorsService>();
+            services.AddScoped<IProducersService, ProducersService>();
+            services.AddScoped<ICinemaService, CinemaService>();
+
+
+
             services.AddControllersWithViews();
         }
 
