@@ -87,9 +87,39 @@ namespace eTickets.Data.Services
             }
 
             //Remove existing actors
-            
+            var existingActorsDb = _context.Actors_Movie.Where(n => n.MovieId == data.Id).ToList();
+            _context.Actors_Movie.RemoveRange(existingActorsDb);
+            await _context.SaveChangesAsync();
 
+            //Add Movie Actors
+            foreach (var actorId in data.ActorIds)
+            {
+                var newActorMovie = new Actor_Movie()
+                {
+                    MovieId = data.Id,
+                    ActorId = actorId
+                };
+                await _context.Actors_Movie.AddAsync(newActorMovie);
+            }
+            await _context.SaveChangesAsync();
         }
-        
+        public List<Movie> FilterMoviesByName(string name, List<Movie> movies)
+        {
+            var filteredMovies = movies.Where(m => m.Name == name)
+                .ToList();
+
+            return filteredMovies;
+        }
+
+        public List<Movie> FilterMoviesByCategory(int category, List<Movie> movies)
+        {
+            var filteredMovies = movies.Where(m => (int)m.MovieCategory == category)
+                .ToList();
+            return filteredMovies;
+        }
+
+
     }
+        
+    
 }

@@ -1,7 +1,9 @@
 using eTickets.Data;
+using eTickets.Data.Cart;
 using eTickets.Data.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,9 +36,12 @@ namespace eTickets
             services.AddScoped<IProducersService, ProducersService>();
             services.AddScoped<ICinemaService, CinemaService>();
             services.AddScoped<IMovieService, MoviesService>();
+           
 
-
-
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped(sc=>ShoppingCart.GetShoppingCart(sc));
+            
+            services.AddSession();
             services.AddControllersWithViews();
         }
 
@@ -57,7 +62,7 @@ namespace eTickets
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
