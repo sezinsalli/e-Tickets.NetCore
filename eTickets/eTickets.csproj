@@ -17,8 +17,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\ViewComponents\" />
-  </ItemGroup>
-
 </Project>
