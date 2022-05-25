@@ -1,4 +1,5 @@
 ﻿using eTickets.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace eTickets.Data
 {
-    public class AppDbContext:DbContext
+    public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("server=MSI\\SQLEXPRESS;database=eTicketDb;integrated security=true");
@@ -28,7 +30,7 @@ namespace eTickets.Data
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Producer> Producers { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        //
+        
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItemss { get; set; }
